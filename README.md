@@ -1,4 +1,4 @@
-# **ETL proces datasetu AmazonBooks**
+# **ETL proces datasetu IMDb**
 
 Tento repozitár obsahuje implementáciu ETL procesu v Snowflake pre analýzu dát z **IMDB datasetu**. Projekt sa zameriava na preskúmanie správania divákov a ich preferencií vo filmových a seriálových hodnoteniach, ako aj na analýzu demografických údajov používateľov. Výsledný dátový model umožňuje multidimenzionálnu analýzu a vizualizáciu kľúčových metrík, ako sú hodnotenia filmov, obľúbenosť žánrov a výkonnosť režisérov či hercov.
 
