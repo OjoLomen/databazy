@@ -42,3 +42,7 @@ Navrhnutý bol **hviezdicový model (star schema)**, pre efektívnu analýzu kde
   <br>
   <em>Obrázok 2 Schéma hviezdy pre IMDb</em>
 </p>
+
+---
+## **3 ETL proces v Snowflake**
+ETL proces zahŕňal tri kľúčové fázy: extrakciu (Extract), transformáciu (Transform) a nahrávanie (Load). V prostredí Snowflake bol tento proces realizovaný s cieľom spracovať zdrojové dáta zo staging vrstvy a pripraviť ich do viacdimenzionálneho dátového modelu vhodného na analytické spracovanie a vizualizáciu.
