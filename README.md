@@ -91,7 +91,7 @@ FROM movie_staging m;
 Primárny kľúč: `dim_movie_id`
 SCD Typ: `0` (nemenná tabuľka, statické údaje)
 
-Dimenzia `dim_names`
+#### **Dimenzia `dim_names`**
 Dimenzia dim_names sa týka hercov a obsahuje informácie ako meno, výšku a známe filmy. Pre túto dimenziu sme použili SCD Typ 2 (Historical), pretože chceme sledovať historické zmeny hercov, napríklad ak sa mení ich známy film alebo ak sa zmení osobná charakteristika. Tento prístup zabezpečuje, že všetky zmeny sú zachované.
 
 - Short (do 150 cm)
@@ -115,7 +115,7 @@ FROM names_staging n;
 Primárny kľúč: `dim_actor_id`
 SCD Typ: `1` (hodnoty sa môžu aktualizovať bez uchovávania histórie)
 
-Dimenzia `dim_genre`
+#### **Dimenzia `dim_genre`**
 Dimenzia dim_genre obsahuje informácie o žánroch filmov, ako je akčný, romantický alebo komédia. Táto dimenzia je statická, takže bola navrhnutá ako SCD Typ 0 (Static). Žánre sa zvyčajne nemenia, takže nové žánre sa jednoducho pridávajú ako nové záznamy, čím sa zjednodušuje správa.
 
 ```sql
@@ -129,7 +129,7 @@ GROUP BY g.genre;
 Primárny kľúč: `dim_genre_id`
 SCD Typ: `0` (statické údaje bez historických zmien)
 
-Dimenzia `dim_director`
+#### **Dimenzia `dim_director`**
 Dimenzia dim_director obsahuje informácie o režiséroch filmov. Táto dimenzia bola navrhnutá ako SCD Typ 1 (Overwriting), pretože informácie o režiséroch sa môžu meniť, ale uchovávame len najaktuálnejšie údaje. Ak sa zmení informácia, jednoducho sa nahradí, čo uľahčuje správu aktuálnych údajov.
 
 ```sql
@@ -143,14 +143,13 @@ FROM names_staging n
 JOIN director_mapping_staging d ON n.id = d.name_id
 GROUP BY n.id, n.name, n.date_of_birth, n.known_for_movies;
 ```
-Primárny kľúč: dim_director_id
-SCD Typ: 1 (hodnoty sa môžu aktualizovať bez uchovávania histórie)
+Primárny kľúč: `dim_director_id`
+SCD Typ: `1` (hodnoty sa môžu aktualizovať bez uchovávania histórie)
 
-Faktová tabuľka `fact_ratings`
+#### **Faktová tabuľka `fact_ratings`**
 Faktová tabuľka fact_ratings spája dimenzie s faktami ako priemerné hodnotenie a počet hlasov. Je navrhnutá tak, aby poskytovala analytický základ pre sledovanie výkonu filmov a hodnotenia. Táto tabuľka je optimálne navrhnutá na vykonávanie analytických dotazov a vizualizácií.
 
 Týmto spôsobom sme zabezpečili, že model je flexibilný a zároveň efektívny pri vykonávaní analýz.
-
 
 ```sql
 CREATE OR REPLACE TABLE fact_ratings AS
@@ -171,8 +170,8 @@ JOIN dim_genre dg ON g.genre = dg.genre
 LEFT JOIN role_mapping_staging rm ON r.movie_id = rm.movie_id
 LEFT JOIN dim_names da ON rm.name_id = da.dim_actor_id;
 ```
-
-3.3 Load (Načítanie dát)
+---
+### **3.3 Load (Načítanie dát)**
 Po vytvorení dimenzií a faktovej tabuľky boli dáta nahrané do finálnej štruktúry. Staging tabuľky boli následne odstránené, aby sa optimalizovalo využitie úložiska.
 
 ```sql
@@ -185,9 +184,17 @@ DROP TABLE IF EXISTS role_mapping_staging;
 ```
 ETL proces v Snowflake spracoval pôvodné dáta z formátu .csv do viacdimenzionálneho modelu typu hviezda. Tento proces zahŕňal čistenie, obohacovanie a reorganizáciu dát, čím sa vytvoril model vhodný pre analýzu a vizualizácie, ktoré poskytujú prehľad o hodnoteniach a trendoch filmov.
 
-4. Vizualizácia dát
+---
+
+## **4. Vizualizácia dát**
 Dashboard obsahuje 5 vizualizácií, ktoré poskytujú prehľad o kľúčových trendoch a metrikách v oblasti filmov, hercov, režisérov, žánrov a hodnotení. Tieto vizualizácie odpovedajú na dôležité otázky, ktoré umožňujú lepšie pochopiť správanie používateľov a ich preferencie. Všetky vizualizácie sú navrhnuté tak, aby poskytovali detailný pohľad na rôzne aspekty filmového priemyslu, pričom zameriavajú pozornosť na najdôležitejšie faktory, ktoré ovplyvňujú výber filmov a hodnotenie používateľmi.
 
+<p align="center">
+  <img src="https://github.com/OjoLomen/databazy/blob/main/IMDB_ERD.png" alt="ERD Schema">
+  <br>
+  <em>Obrázok 1 Entitno-relačná schéma IMDb</em>
+</p>
+---
 Graf 1: Distribúcia Priemerného Hodnotenia Filmov
 Tento graf zobrazuje, ako sa filmy rozdeľujú podľa ich priemerného hodnotenia. Pomocou tejto vizualizácie môžeme získať prehľad o kvalite filmov a ich hodnotení medzi používateľmi. Zobrazuje počet filmov, ktoré sa nachádzajú v rôznych hodnotiacich intervaloch, čo nám umožňuje analyzovať, či väčšina filmov patrí do vyšších alebo nižších hodnotiacich kategórií. Táto vizualizácia poskytuje dôležité informácie pre analýzu preferencií a hodnotenia filmov.
 
@@ -197,7 +204,7 @@ FROM fact_ratings
 GROUP BY avg_rating
 ORDER BY avg_rating;
 ```
-
+---
 Graf 2: Top 10 Najproduktívnejších Režisérov
 Táto vizualizácia zobrazuje 10 režisérov s najväčším počtom filmov v našej databáze. Pomáha nám identifikovať, ktorí režiséri sú najaktívnejší v produkcii filmov a ktorí z nich sa podieľali na najväčšom počte projektov. Tieto informácie môžu byť užitočné pri analýze kariérnych dráh režisérov alebo pri hodnotení ich vplyvu na filmový priemysel.
 
@@ -209,7 +216,7 @@ GROUP BY dd.name
 ORDER BY movie_count DESC
 LIMIT 10;
 ```
-
+---
 Graf 3: Najpopulárnejšie Filmové Žánre Podľa Počtu Filmov
 Tento graf zobrazuje najpopulárnejšie filmové žánre na základe počtu filmov v každom žánri. Táto vizualizácia pomáha identifikovať dominujúce žánre, ktoré sú najviac zastúpené v databáze. Môžeme sledovať, ako sa vyvíjajú trendy v oblasti filmovej produkcie a aké žánre sú najviac vyhľadávané. Analýza týchto dát môže byť užitočná pri predpovedaní populárnych žánrov v budúcnosti, ako aj pri vytváraní marketingových kampaní zameraných na konkrétne skupiny divákov.
 
@@ -221,7 +228,7 @@ GROUP BY dg.genre
 ORDER BY genre_count DESC;
 
 ```
-
+---
 Graf 4: Vývoj Počtu Filmov v Čase
 Táto vizualizácia ukazuje, ako sa počet filmov menil v priebehu rokov. Pomáha analyzovať vývoj filmovej produkcie v rôznych obdobiach a odhaliť trendy v intenzite produkcie filmov. Môže sa ukázať, že niektoré roky zaznamenali výrazný nárast v počte filmov, zatiaľ čo iné obdobia boli menej aktívne. Tento typ analýzy poskytuje hodnotné informácie o dynamike filmového priemyslu a jeho vývoji v časovom horizonte.
 
@@ -231,7 +238,7 @@ FROM dim_movie dm
 GROUP BY dm.year
 ORDER BY dm.year;
 ```
-
+---
 Graf 5. Priemerné Hodnotenie Filmov podľa Produkčných Spoločností
 Tento graf zobrazuje priemerné hodnotenie filmov podľa produkčných spoločností. Umožňuje identifikovať produkčné spoločnosti, ktoré vytvárajú filmy s najvyšším priemerným hodnotením, a naopak, spoločnosti, ktorých filmy nedosahujú vysoké hodnotenia. Tieto informácie môžu byť užitočné pre hodnotenie kvality filmovej produkcie rôznych spoločností, a to nielen z hľadiska hodnotenia používateľov, ale aj z pohľadu budúcej spolupráce alebo investícií.
 
