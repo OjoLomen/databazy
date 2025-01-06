@@ -7,7 +7,7 @@ Tento repozitár obsahuje implementáciu ETL procesu v Snowflake pre analýzu d�
 Cieľom tohto semestrálneho projektu je analyzovať rozsiahle dátové súbory z databázy IMDb (Internet Movie Database). IMDb je jednou z najväčších online databáz filmov, televíznych seriálov a hercov na svete. Analýza týchto dát nám umožní získať cenné poznatky o trendoch vo filmovom priemysle, identifikovať najúspešnejšie filmy a hercov, preskúmať vzťahy medzi rôznymi atribútmi filmov (žánre, režiséri, herci) a predpovedať potenciálny úspech nových filmov.
 
 Zdrojové dáta pochádzajú z GitHubu dostupného [tu](https://github.com/AntaraChat/SQL---IMDb-Movie-Analysis/blob/main/EXECUTIVE%20SUMMARY.pdf). Dataset obsahuje päť hlavných tabuliek:
-- `movies`
+- `movie`
 - `ratings`
 - `genre`
 - `director_mapping`
