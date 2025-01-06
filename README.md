@@ -72,7 +72,7 @@ Tu som použil parameter `ON_ERROR = 'CONTINUE'`, v prípade nekonzistentných z
 
 V tejto fáze boli dáta zo staging tabuliek vyčistené, transformované a pripravené na analytické účely. Hlavným cieľom bolo vytvoriť dimenzionálne tabuľky a faktovú tabuľku, ktoré umožnia efektívnu analýzu a rýchle získavanie odpovedí na kľúčové otázky.
 
-## **Dimenzia `dim_movie`**
+#### **Dimenzia `dim_movie`**
 Dimenzia `dim_movie` obsahuje informácie o filmoch, ako názov, rok vydania a produkčnú spoločnosť. Táto dimenzia bola navrhnutá ako SCD Typ 0 (Static), pretože údaje o filmoch sa v čase nemenia. Filmy sa pridávajú ako nové záznamy a staré údaje sa nemenia, čo šetrí miesto a zjednodušuje správu dát.
 ```sql
 CREATE OR REPLACE TABLE dim_movie AS
