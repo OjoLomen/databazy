@@ -6,7 +6,7 @@ Tento repozitár obsahuje implementáciu ETL procesu v Snowflake pre analýzu d�
 ## **1. Úvod a popis zdrojových dát**
 Cieľom tohto semestrálneho projektu je analyzovať rozsiahle dátové súbory z databázy IMDb (Internet Movie Database). IMDb je jednou z najväčších online databáz filmov, televíznych seriálov a hercov na svete. Analýza týchto dát nám umožní získať cenné poznatky o trendoch vo filmovom priemysle, identifikovať najúspešnejšie filmy a hercov, preskúmať vzťahy medzi rôznymi atribútmi filmov (žánre, režiséri, herci) a predpovedať potenciálny úspech nových filmov.
 
-Zdrojové dáta pochádzajú z Kaggle datasetu dostupného [tu](https://www.kaggle.com/datasets/saurabhbagchi/books-dataset). Dataset obsahuje päť hlavných tabuliek:
+Zdrojové dáta pochádzajú z GitHubu dostupného [tu](https://github.com/AntaraChat/SQL---IMDb-Movie-Analysis/blob/main/EXECUTIVE%20SUMMARY.pdf). Dataset obsahuje päť hlavných tabuliek:
 - `movies`
 - `ratings`
 - `genre`
@@ -194,7 +194,9 @@ Dashboard obsahuje 5 vizualizácií, ktoré poskytujú prehľad o kľúčových 
   <br>
   <em>Obrázok 1 Entitno-relačná schéma IMDb</em>
 </p>
+
 ---
+
 Graf 1: Distribúcia Priemerného Hodnotenia Filmov
 Tento graf zobrazuje, ako sa filmy rozdeľujú podľa ich priemerného hodnotenia. Pomocou tejto vizualizácie môžeme získať prehľad o kvalite filmov a ich hodnotení medzi používateľmi. Zobrazuje počet filmov, ktoré sa nachádzajú v rôznych hodnotiacich intervaloch, čo nám umožňuje analyzovať, či väčšina filmov patrí do vyšších alebo nižších hodnotiacich kategórií. Táto vizualizácia poskytuje dôležité informácie pre analýzu preferencií a hodnotenia filmov.
 
@@ -204,7 +206,9 @@ FROM fact_ratings
 GROUP BY avg_rating
 ORDER BY avg_rating;
 ```
+
 ---
+
 Graf 2: Top 10 Najproduktívnejších Režisérov
 Táto vizualizácia zobrazuje 10 režisérov s najväčším počtom filmov v našej databáze. Pomáha nám identifikovať, ktorí režiséri sú najaktívnejší v produkcii filmov a ktorí z nich sa podieľali na najväčšom počte projektov. Tieto informácie môžu byť užitočné pri analýze kariérnych dráh režisérov alebo pri hodnotení ich vplyvu na filmový priemysel.
 
@@ -216,7 +220,9 @@ GROUP BY dd.name
 ORDER BY movie_count DESC
 LIMIT 10;
 ```
+
 ---
+
 Graf 3: Najpopulárnejšie Filmové Žánre Podľa Počtu Filmov
 Tento graf zobrazuje najpopulárnejšie filmové žánre na základe počtu filmov v každom žánri. Táto vizualizácia pomáha identifikovať dominujúce žánre, ktoré sú najviac zastúpené v databáze. Môžeme sledovať, ako sa vyvíjajú trendy v oblasti filmovej produkcie a aké žánre sú najviac vyhľadávané. Analýza týchto dát môže byť užitočná pri predpovedaní populárnych žánrov v budúcnosti, ako aj pri vytváraní marketingových kampaní zameraných na konkrétne skupiny divákov.
 
@@ -228,7 +234,9 @@ GROUP BY dg.genre
 ORDER BY genre_count DESC;
 
 ```
+
 ---
+
 Graf 4: Vývoj Počtu Filmov v Čase
 Táto vizualizácia ukazuje, ako sa počet filmov menil v priebehu rokov. Pomáha analyzovať vývoj filmovej produkcie v rôznych obdobiach a odhaliť trendy v intenzite produkcie filmov. Môže sa ukázať, že niektoré roky zaznamenali výrazný nárast v počte filmov, zatiaľ čo iné obdobia boli menej aktívne. Tento typ analýzy poskytuje hodnotné informácie o dynamike filmového priemyslu a jeho vývoji v časovom horizonte.
 
@@ -238,7 +246,9 @@ FROM dim_movie dm
 GROUP BY dm.year
 ORDER BY dm.year;
 ```
+
 ---
+
 Graf 5. Priemerné Hodnotenie Filmov podľa Produkčných Spoločností
 Tento graf zobrazuje priemerné hodnotenie filmov podľa produkčných spoločností. Umožňuje identifikovať produkčné spoločnosti, ktoré vytvárajú filmy s najvyšším priemerným hodnotením, a naopak, spoločnosti, ktorých filmy nedosahujú vysoké hodnotenia. Tieto informácie môžu byť užitočné pre hodnotenie kvality filmovej produkcie rôznych spoločností, a to nielen z hľadiska hodnotenia používateľov, ale aj z pohľadu budúcej spolupráce alebo investícií.
 
