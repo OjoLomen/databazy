@@ -190,7 +190,7 @@ ETL proces v Snowflake spracoval pôvodné dáta z formátu .csv do viacdimenzio
 Dashboard obsahuje 5 vizualizácií, ktoré poskytujú prehľad o kľúčových trendoch a metrikách v oblasti filmov, hercov, režisérov, žánrov a hodnotení. Tieto vizualizácie odpovedajú na dôležité otázky, ktoré umožňujú lepšie pochopiť správanie používateľov a ich preferencie. Všetky vizualizácie sú navrhnuté tak, aby poskytovali detailný pohľad na rôzne aspekty filmového priemyslu, pričom zameriavajú pozornosť na najdôležitejšie faktory, ktoré ovplyvňujú výber filmov a hodnotenie používateľmi.
 
 <p align="center">
-  <img src="https://github.com/OjoLomen/databazy/blob/main/Vizualizacia_dat.png" alt="Päť diagramov/grafov IMDb Datasetu">
+  <img src="https://github.com/OjoLomen/databazy/blob/main/grafi_db.png" alt="Päť diagramov/grafov IMDb Datasetu">
   <br>
   <em>Obrázok 3 Päť diagramov/grafov IMDb Datasetu</em>
 </p>
