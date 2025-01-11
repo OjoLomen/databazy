@@ -209,15 +209,17 @@ ORDER BY avg_rating;
 
 ---
 
-### **Graf 2: Top 10 Najproduktívnejších Režisérov**
-Táto vizualizácia zobrazuje 10 režisérov s najväčším počtom filmov v našej databáze. Pomáha nám identifikovať, ktorí režiséri sú najaktívnejší v produkcii filmov a ktorí z nich sa podieľali na najväčšom počte projektov. Tieto informácie môžu byť užitočné pri analýze kariérnych dráh režisérov alebo pri hodnotení ich vplyvu na filmový priemysel.
+### **Graf 2: Top 10 Najhodnotenejších Filmov podľa Počtu Hodnotení**
+Táto vizualizácia zobrazuje 10 filmov s najvyšším počtom hodnotení, čo umožňuje identifikovať najpopulárnejšie tituly medzi používateľmi. Poskytuje prehľad o filmoch, ktoré generovali najväčší záujem a aktivitu. Tieto informácie môžu byť užitočné pre analýzu trendov v preferenciách divákov, tvorbu odporúčaní alebo cielené marketingové kampane.
 
 ```sql
-SELECT dd.name AS director_name, COUNT(*) AS movie_count
+SELECT 
+    dm.title AS movie_title,
+    COUNT(fr.rating_id) AS total_ratings
 FROM fact_ratings fr
-JOIN dim_director dd ON fr.dim_director_id = dd.dim_director_id
-GROUP BY dd.name
-ORDER BY movie_count DESC
+JOIN dim_movie dm ON fr.dim_movie_id = dm.dim_movie_id
+GROUP BY dm.title
+ORDER BY total_ratings DESC
 LIMIT 10;
 ```
 
